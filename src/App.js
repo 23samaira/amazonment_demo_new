@@ -58,8 +58,22 @@ function App() {
   const handleDecrement = (id) => {
     setQuantities((prev) => ({
       ...prev,
-      [id]: prev[id] > 1 ? prev[id] - 1 : 1, // Minimum quantity is 1
+      [id]: prev[id] > 0 ? prev[id] - 1 : 0, // Minimum quantity is 1
     }));
+  };
+  // Calculate total price based on quantities
+  const totalPrice = products.reduce(
+    (total, product) => total + product.price * quantities[product.id],
+    0
+  );
+  const handleBuyNow = () => {
+    // Prepare data to send to the server
+    const orderData = products.map((product) => ({
+      sku: product.id,
+      quantity: quantities[product.id],
+    }));
+    // Simulate sending data to the server
+    //console.log("Sending the following order data to the server:", orderData);
   };
 
   return (
@@ -125,6 +139,17 @@ function App() {
           </div>
         ))}
       </section>
+      {/* Footer with Buy Now Button */}
+      <footer className="fixed bottom-0 left-0 w-full bg-white shadow-md p-4 flex justify-between items-center">
+        <h2 className="text-xl font-bold">Total: ₹{totalPrice}</h2>
+        <button
+          onClick={handleBuyNow}
+          className="btn btn-success"
+          disabled={totalPrice === 0} // Disable button if total price is 0
+        >
+          Buy Now
+        </button>
+      </footer>
     </div>
   );
 }
