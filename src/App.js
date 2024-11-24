@@ -132,8 +132,6 @@ function App() {
                     +
                   </button>
                 </div>
-                {/* Buy Now Button */}
-                <button className="btn btn-primary btn-sm">Buy Now</button>
               </div>
             </div>
           </div>
